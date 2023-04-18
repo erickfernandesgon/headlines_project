@@ -22,7 +22,7 @@ class KeywordsSpider(scrapy.Spider):
              }
         for ibram in response.css('a.title.mtr-site'):
                 yield{
-                'ibram_news': ibram.css('a.title.mtr-site ::text').extract(),
+                'ibram_news': [date.strip() for date in response.css('.pg-noticias .news-list .box .data-card .text-info .card-nav .d-flex .date ::text').extract()],
                 'ibram_link_news': ibram.css('a.title.mtr-site ::attr(href)').extract()
             }
         for meio_ambiente in response.css('h2.tileHeadline'):
