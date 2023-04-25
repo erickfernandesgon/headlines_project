@@ -3,7 +3,7 @@ import scrapy
 
 class KeywordsSpider(scrapy.Spider):
     name = 'keywords'
-    start_urls = ['https://www.ethos.org.br/categoria/noticias/', 'https://www.pactoglobal.org.br/noticias', 'https://ibram.org.br/noticias/', 'https://www.gov.br/mma/pt-br/assuntos/noticias']
+    start_urls = ['https://www.ethos.org.br/categoria/noticias/', 'https://www.pactoglobal.org.br/noticias', 'https://ibram.org.br/noticias/', 'https://www.gov.br/mma/pt-br/assuntos/noticias', 'https://www7.fiemg.com.br/Noticias']
 
     def parse(self, response):
         if 'https://www.ethos.org.br/categoria/noticias/' in response.url:
@@ -25,10 +25,15 @@ class KeywordsSpider(scrapy.Spider):
                 'ibram_news': [date.strip() for date in response.css('.pg-noticias .news-list .box .data-card .text-info .card-nav .d-flex .date ::text').extract()],
                 'ibram_link_news': ibram.css('a.title.mtr-site ::attr(href)').extract()
             }
-        for meio_ambiente in response.css('h2.tileHeadline'):
+        for meio_ambiente in response.css('.media.media--vertical'):
             yield{
-                'ministerio_meio_ambiente_news':meio_ambiente.css('h2.tileHeadline ::text').extract(),
-                'ministerio_meio_ambiente_link':meio_ambiente.css('h2.tileHeadline ::attr(href)').extract()
+                'FIEMG_NEWS_HEADLINE':meio_ambiente.css('.media.media--vertical ::text').extract(),
+                'FIEMG_NEWS_HEADLINE_LINK':meio_ambiente.css('.media.media--vertical ::attr(href)').extract()
+            }
+        for meio_ambiente in response.css('h2.tileHeadline'):
+            yield {
+                'ministerio_meio_ambiente_news': meio_ambiente.css('h2.tileHeadline ::text').extract(),
+                'ministerio_meio_ambiente_link': meio_ambiente.css('h2.tileHeadline ::attr(href)').extract()
             }
 
 
