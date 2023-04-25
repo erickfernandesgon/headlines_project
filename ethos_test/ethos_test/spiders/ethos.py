@@ -3,7 +3,10 @@ import scrapy
 
 class KeywordsSpider(scrapy.Spider):
     name = 'keywords'
-    start_urls = ['https://www.ethos.org.br/categoria/noticias/', 'https://www.pactoglobal.org.br/noticias', 'https://ibram.org.br/noticias/', 'https://www.gov.br/mma/pt-br/assuntos/noticias', 'https://www7.fiemg.com.br/Noticias']
+    headers = {
+        'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36'
+    }
+    start_urls = ['https://www.ethos.org.br/categoria/noticias/', 'https://www.pactoglobal.org.br/noticias', 'https://ibram.org.br/noticias/', 'https://www.gov.br/mma/pt-br/assuntos/noticias', 'https://www7.fiemg.com.br/Noticias', 'https://www.amcham.com.br/noticias']
 
     def parse(self, response):
         if 'https://www.ethos.org.br/categoria/noticias/' in response.url:
@@ -26,27 +29,22 @@ class KeywordsSpider(scrapy.Spider):
                 'ibram_link_news': ibram.css('a.title.mtr-site ::attr(href)').extract()
             }
         for FIEG in response.css('.media.media--vertical'):
-    # Extract the headline and link
-    headline = FIEG.css('.media.media--vertical ::text').get().strip().replace('\n', '').replace('\r', '')
-    link = FIEG.css('.media.media--vertical ::attr(href)').get()
-
-    # Check if the headline contains "Desenvolvimento Industrial" and skip if it does
-    if "Desenvolvimento Industrial" in headline:
-        continue
-
-    # Check if the headline contains a date and remove it
-    if any(date in headline for date in ['01/','02/','03/','04/','05/','06/','07/','08/','09/','10/','11/','12/']):
-        headline = headline.split(" ")[1:]
-
-    # Yield the cleaned headline and link
-    yield {
-        'FIEMG_NEWS_HEADLINE': headline,
-        'FIEMG_NEWS_HEADLINE_LINK': link
-        }
+            # Extract the headline and link
+            headline = str(FIEG.css('.media.media--vertical ::text').extract()).strip().replace(r'\n', '').replace(r'\r', '').replace(' \\t','').replace('                        ',"")
+            link = FIEG.css('.media.media--vertical ::attr(href)').get()
+        # Yield the cleaned headline and link
+            yield {
+                'FIEMG_NEWS_HEADLINE': headline,
+                'FIEMG_NEWS_HEADLINE_LINK': link
+             }
         for meio_ambiente in response.css('h2.tileHeadline'):
             yield {
                 'ministerio_meio_ambiente_news': meio_ambiente.css('h2.tileHeadline ::text').extract(),
                 'ministerio_meio_ambiente_link': meio_ambiente.css('h2.tileHeadline ::attr(href)').extract()
+            }
+        for each_headline in response.css('.cover-collection-tile.tile-content'):
+            yield {
+                'headline_news':str(each_headline.css('.cover-collection-tile.tile-content ::text').extract()).strip().replace('\n', "").replace('\\n', "").replace('               ', "")
             }
 
 
