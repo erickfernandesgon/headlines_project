@@ -26,10 +26,23 @@ class KeywordsSpider(scrapy.Spider):
                 'ibram_link_news': ibram.css('a.title.mtr-site ::attr(href)').extract()
             }
         for FIEG in response.css('.media.media--vertical'):
-            yield{
-                'FIEMG_NEWS_HEADLINE':FIEG.css('.media.media--vertical ::text').extract(),
-                'FIEMG_NEWS_HEADLINE_LINK':FIEG.css('.media.media--vertical ::attr(href)').extract()
-            }
+    # Extract the headline and link
+    headline = FIEG.css('.media.media--vertical ::text').get().strip().replace('\n', '').replace('\r', '')
+    link = FIEG.css('.media.media--vertical ::attr(href)').get()
+
+    # Check if the headline contains "Desenvolvimento Industrial" and skip if it does
+    if "Desenvolvimento Industrial" in headline:
+        continue
+
+    # Check if the headline contains a date and remove it
+    if any(date in headline for date in ['01/','02/','03/','04/','05/','06/','07/','08/','09/','10/','11/','12/']):
+        headline = headline.split(" ")[1:]
+
+    # Yield the cleaned headline and link
+    yield {
+        'FIEMG_NEWS_HEADLINE': headline,
+        'FIEMG_NEWS_HEADLINE_LINK': link
+        }
         for meio_ambiente in response.css('h2.tileHeadline'):
             yield {
                 'ministerio_meio_ambiente_news': meio_ambiente.css('h2.tileHeadline ::text').extract(),
