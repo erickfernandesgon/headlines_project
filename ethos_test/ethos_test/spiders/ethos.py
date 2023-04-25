@@ -25,10 +25,10 @@ class KeywordsSpider(scrapy.Spider):
                 'ibram_news': [date.strip() for date in response.css('.pg-noticias .news-list .box .data-card .text-info .card-nav .d-flex .date ::text').extract()],
                 'ibram_link_news': ibram.css('a.title.mtr-site ::attr(href)').extract()
             }
-        for meio_ambiente in response.css('.media.media--vertical'):
+        for FIEG in response.css('.media.media--vertical'):
             yield{
-                'FIEMG_NEWS_HEADLINE':meio_ambiente.css('.media.media--vertical ::text').extract(),
-                'FIEMG_NEWS_HEADLINE_LINK':meio_ambiente.css('.media.media--vertical ::attr(href)').extract()
+                'FIEMG_NEWS_HEADLINE':FIEG.css('.media.media--vertical ::text').extract(),
+                'FIEMG_NEWS_HEADLINE_LINK':FIEG.css('.media.media--vertical ::attr(href)').extract()
             }
         for meio_ambiente in response.css('h2.tileHeadline'):
             yield {
