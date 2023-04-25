@@ -29,13 +29,9 @@ class KeywordsSpider(scrapy.Spider):
                 'ibram_link_news': ibram.css('a.title.mtr-site ::attr(href)').extract()
             }
         for FIEG in response.css('.media.media--vertical'):
-            # Extract the headline and link
-            headline = str(FIEG.css('.media.media--vertical ::text').extract()).strip().replace(r'\n', '').replace(r'\r', '').replace(' \\t','').replace('                        ',"")
-            link = FIEG.css('.media.media--vertical ::attr(href)').get()
-        # Yield the cleaned headline and link
             yield {
-                'FIEMG_NEWS_HEADLINE': headline,
-                'FIEMG_NEWS_HEADLINE_LINK': link
+                'FIEMG_NEWS_HEADLINE': str(FIEG.css('.media.media--vertical ::text')).extract(),
+                'FIEMG_NEWS_HEADLINE_LINK':str(FIEG.css('.media.media--vertical ::attr(href)')).extract()
              }
         for meio_ambiente in response.css('h2.tileHeadline'):
             yield {
@@ -44,13 +40,12 @@ class KeywordsSpider(scrapy.Spider):
             }
         for each_headline in response.css('.cover-collection-tile.tile-content'):
             yield {
-                'headline_news':str(each_headline.css('.cover-collection-tile.tile-content ::text').extract()).strip().replace('\n', "").replace('\\n', "").replace('               ', "")
-
+                'headline_news':str(each_headline.css('.cover-collection-tile.tile-content ::text').extract()
             }
         for news_associations in response.css('.coluna9'):
             yield {
                 'headline_aberge': str(
-                    news_associations.css('.coluna9 ::text').extract()).strip().replace(r'\n\t\t\t\t\t', "").replace(r'\t\t\t\t',"").replace(r'Página', ""),
+                    news_associations.css('.coluna9 ::text').extract()),
                 'links_aberge': str(news_associations.css('.coluna9 ::attr(href)').extract())
             }
         for abag_association in response.css('.dg-blog-grid'):
