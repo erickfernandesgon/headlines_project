@@ -46,6 +46,9 @@ ROBOTSTXT_OBEY = True
 #    "Accept-Language": "en",
 #}
 
+#LOG LEVEL
+LOG_LEVEL = 'DEBUG'
+
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
@@ -67,8 +70,7 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'myproject.pipelines.GlobalFertPipeline': 100,
-    'myproject.pipelines.TestPipeline': 200,
+    'ethos_test.pipelines.TestPipeline': 200,
 
 }
 
