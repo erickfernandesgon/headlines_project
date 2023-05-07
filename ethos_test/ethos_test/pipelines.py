@@ -8,6 +8,8 @@
 from itemadapter import ItemAdapter
 
 
-class EthosTestPipeline:
+class TestPipeline:
     def process_item(self, item, spider):
+        if 'globalfert.com.br' in spider.start_urls:
+            print(item)
         return item
