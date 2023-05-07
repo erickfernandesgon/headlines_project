@@ -1,12 +1,11 @@
 import scrapy
-
-
 class KeywordsSpider(scrapy.Spider):
     name = 'keywords'
+    allowed_domains = 'globalfert.com.br'
     headers = {
         'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36'
     }
-    start_urls = ['https://www.ethos.org.br/categoria/noticias/', 'https://www.pactoglobal.org.br/noticias', 'https://ibram.org.br/noticias/', 'https://www.gov.br/mma/pt-br/assuntos/noticias', 'https://www7.fiemg.com.br/Noticias', 'https://www.amcham.com.br/noticias','https://www.aberje.com.br/category/noticias/', 'https://abag.com.br/noticias-abag/']
+    start_urls = ['https://www.ethos.org.br/categoria/noticias/', 'https://www.pactoglobal.org.br/noticias', 'https://ibram.org.br/noticias/', 'https://www.gov.br/mma/pt-br/assuntos/noticias', 'https://www7.fiemg.com.br/Noticias', 'https://www.amcham.com.br/noticias','https://www.aberje.com.br/category/noticias/', 'https://abag.com.br/noticias-abag/', 'https://www.cnabrasil.org.br/cna/noticias', 'https://www.socioambiental.org/historias', 'http://www.aprosoja.com.br/comunicacao/noticias-e-releases/','https://www.saopaulo.sp.gov.br/ultimas-noticias/', 'https://www.desenvolvimentoeconomico.sp.gov.br/category/noticias/', 'https://www.al.sp.gov.br/noticias', 'https://globalfert.com.br/category/noticias/']
 
     def parse(self, response):
         if 'https://www.ethos.org.br/categoria/noticias/' in response.url:
@@ -30,8 +29,8 @@ class KeywordsSpider(scrapy.Spider):
             }
         for FIEG in response.css('.media.media--vertical'):
             yield {
-                'FIEMG_NEWS_HEADLINE': str(FIEG.css('.media.media--vertical ::text')).extract(),
-                'FIEMG_NEWS_HEADLINE_LINK':str(FIEG.css('.media.media--vertical ::attr(href)')).extract()
+                'FIEMG_NEWS_HEADLINE': str(FIEG.css('.media.media--vertical ::text').extract()),
+                'FIEMG_NEWS_HEADLINE_LINK':str(FIEG.css('.media.media--vertical ::attr(href)').extract())
              }
         for meio_ambiente in response.css('h2.tileHeadline'):
             yield {
@@ -40,7 +39,7 @@ class KeywordsSpider(scrapy.Spider):
             }
         for each_headline in response.css('.cover-collection-tile.tile-content'):
             yield {
-                'headline_news':str(each_headline.css('.cover-collection-tile.tile-content ::text').extract()
+                'headline_news': str(each_headline.css('.cover-collection-tile.tile-content ::text').extract())
             }
         for news_associations in response.css('.coluna9'):
             yield {
@@ -53,4 +52,38 @@ class KeywordsSpider(scrapy.Spider):
                 'headline_abag': str(abag_association.css('.dg-blog-grid ::text').extract()),
                 'links_abag': str(abag_association.css('.dg-blog-grid ::attr(href)').extract())
             }
-
+        for cna_highlights in response.css('.grid-destaque-lista'):
+            yield {
+                'headline_cna': str(cna_highlights.css('.grid-destaque-lista ::text').extract()),
+                'links_abag': str(cna_highlights.css('.grid-destaque-lista ::attr(href)').extract())
+            }
+        for socio_ambiental in response.css('.grid-3-columns'):
+            yield {
+                'headline_socioambiental': str(socio_ambiental.css('.grid-3-columns ::text').extract()),
+                'links_socioambientals': str(socio_ambiental.css('.grid-3-columns ::attr(href)').extract())
+            }
+        for aprosja_series in response.css('.listagem'):
+            yield {
+                'headline_aprosja': str(aprosja_series.css('.listagem ::text').extract()),
+                'links_aprosja': str(aprosja_series.css('.listagem ::attr(href)').extract())
+            }
+        for governo_sp_website in response.css('.style-post-list'):
+            yield {
+                'headline_governo_sampa': str(governo_sp_website.css('.style-post-list ::text').extract()),
+                'links_governo_sampa': str(governo_sp_website.css('.style-post-list ::attr(href)').extract())
+            }
+        for desenvolvimento_sp_website in response.css('.lista'):
+            yield {
+                'headline_desenvolvimento_sampa': str(desenvolvimento_sp_website.css('.lista ::text').extract()),
+                'links_desenvolvimento_sampa': str(desenvolvimento_sp_website.css('.lista ::attr(href)').extract())
+            }
+        for alesp in response.css('.rw'):
+            yield {
+                'headline_alesp': str(alesp.css('.rw ::text').extract()),
+                'links_alesp': str(alesp.css('.rw ::attr(href)').extract())
+            }
+        for globalfert in response.css('.mg-box-container.clearfix'):
+            yield {
+                'headline_globalfert': str(globalfert.css('.mag-box-container.clearfix ::text').extract()),
+                'links_globalfert': str(globalfert.css('.mag-box-container.clearfix ::attr(href)').extract())
+            }
