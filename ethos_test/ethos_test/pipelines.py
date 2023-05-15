@@ -10,6 +10,6 @@ from itemadapter import ItemAdapter
 
 class TestPipeline:
     def process_item(self, item, spider):
-        if 'globalfert.com.br' in spider.start_urls:
+        if 'https://globalfert.com.br' in spider.start_urls:
             print(item)
         return item

@@ -46,9 +46,6 @@ ROBOTSTXT_OBEY = True
 #    "Accept-Language": "en",
 #}
 
-#LOG LEVEL
-LOG_LEVEL = 'DEBUG'
-
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
@@ -70,10 +67,9 @@ LOG_LEVEL = 'DEBUG'
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'ethos_test.pipelines.TestPipeline': 200,
+    'ethos_test.pipelines.TestPipeline': 100,
 
 }
-
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
