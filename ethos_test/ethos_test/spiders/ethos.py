@@ -15,10 +15,10 @@ class KeywordsSpider(scrapy.Spider):
                 'IBRAM_LINKS': ibram.css('.title.mtr-site ::attr(href)').extract(),
                 'IBRAM_DATA_HEADLINE': response.css('.date ::text').extract()
             }
-        for fieg in response.css('.media.media--vertical'):
+        for fiemg in response.css('.media.media--vertical'):
             yield {
-                'FIEG_NEWS_HEADLINE': str(fieg.css('.media.media--vertical ::text').extract()),
-                'FIEMG_NEWS_HEADLINE_LINK':str(fieg.css('.media.media--vertical ::attr(href)').extract()),
+                'FIEMG_NEWS_HEADLINE': str(fiemg.css('.media.media--vertical ::text').extract()),
+                'FIEMG_NEWS_HEADLINE_LINK':str(fiemg.css('.media.media--vertical ::attr(href)').extract()),
              }
         for meio_ambiente in response.css('h2.tileHeadline'):
             yield {
