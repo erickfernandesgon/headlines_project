@@ -16,18 +16,32 @@ lista_mma_links = new_dataframe['ministerio_meio_ambiente_link']
 #Creating new lists for these dataframes
 lista_cna_headlines_first, lista_cna_headlines_second = new_dataframe['headline_cna_mainly'], new_dataframe['headline_cna_secondpart']
 
+#Creating new lists for these dataframes in links case:
+cna_first_links, cna_second_links = new_dataframe['links_cna'], new_dataframe['links_cma_part2']
+cna_dates = new_dataframe['CNA_DATA']
+
 #Cleaning NaN values and reseting index for CNA
-
-
+#Headlines
 lista_cna_headlines_first.dropna(inplace=True)
 lista_cna_headlines_second.dropna(inplace=True)
 lista_cna_headlines_first = lista_cna_headlines_first.reset_index(drop=True)
 lista_cna_headlines_second = lista_cna_headlines_second.reset_index(drop=True)
 
+#Links
+cna_first_links.dropna(inplace=True)
+cna_second_links.dropna(inplace=True)
+cna_first_links = cna_first_links.reset_index(drop=True)
+cna_second_links = cna_second_links.reset_index(drop=True)
+
+#Dates
+cna_dates.dropna(inplace=True)
+cna_dates = cna_dates.reset_index(drop=True)
+
+
+
 #Removing \n\t\t\t characteres for lista_cna_headlines_second[:][0]:
 for i in range(len(lista_cna_headlines_second[:][0])):
     lista_cna_headlines_second[i] = lista_cna_headlines_second[i][0]
-
 
 for elemento in range(len(lista_cna_headlines_second)):
     lista_cna_headlines_second[elemento] = lista_cna_headlines_second[elemento][0].strip()
@@ -37,21 +51,37 @@ for elemento in range(len(lista_cna_headlines_second)):
 for i in range(len(lista_cna_headlines_first)):
     lista_cna_headlines_first[i] = lista_cna_headlines_first[i][0]
 
-#Concatening the first and second columns
+#Removing \n\t\t\t\t\t characters for cna_dates:
+for i in range(len(cna_dates)):
+    cna_dates[i] = cna_dates[i].replace(r'\n\t\t\t\t\t', '')
 
+for i in range(len(cna_dates)):
+    cna_dates[i] = cna_dates[i].replace(r'\n\t\t\t\t', '')
+
+#Concatenate cna_links and cna_headlines_first and cna_headlines_secomd:
 cna_headlines_final = [lista_cna_headlines_first, lista_cna_headlines_second]
 cna_headlines_final = pd.concat(cna_headlines_final, ignore_index=True)
+links_cna_final = [cna_first_links, cna_second_links]
+links_cna_final = pd.concat(links_cna_final, ignore_index=True)
+
 
 #Dropping [3] line in cna_headlines_final:
+
 cna_headlines_final.drop([3], inplace=True)
 
 #Reseting index in cna_headlines_final
+
 cna_headlines_final = cna_headlines_final.reset_index(drop=True)
 
 #Getting the first 5 rows on:
-
 cna_headlines_final = cna_headlines_final[:5]
+links_cna_final = links_cna_final[:5]
+cna_dates = cna_dates[:5]
 
+#Removing titles with \n\t\t\t
+
+for i in range(len(cna_headlines_final)):
+    cna_headlines_final[i] = cna_headlines_final[i].strip()
 
 #Aprosoja
 headline_aprosja, date_aprosja, links_aprosja = new_dataframe['headline_aprosja'], new_dataframe['aprosja_dates'], new_dataframe['links_aprosja']
@@ -395,4 +425,9 @@ fiemg_dataframe = pd.DataFrame(fiemg_dictionary)
 
 aprosoja_dictionary = {'HEADLINES APROSOJA':headline_aprosja_final, 'DATES APROSOJA':dates_aprosja_final, 'LINKS APROSOJA':links_aprosja_final}
 aprosoja_dataframe = pd.DataFrame(aprosoja_dictionary)
+
+#Creating a dictionary and a DataFrame to CNA
+
+cna_dictionary = {'CNA_HEADLINES':cna_headlines_final, 'DATES_CNA':cna_dates, 'LINKS CNA':links_cna_final}
+cna_dataframe = pd.DataFrame(cna_dictionary)
 
