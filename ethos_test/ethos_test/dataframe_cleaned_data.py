@@ -11,17 +11,66 @@ lista_mma_headlines = new_dataframe['ministerio_meio_ambiente_news']
 lista_mma_dates = new_dataframe['ministerio_meio_ambiente_data']
 lista_mma_links = new_dataframe['ministerio_meio_ambiente_link']
 
+#CNA
+
+#Creating new lists for these dataframes
+lista_cna_headlines_first, lista_cna_headlines_second = new_dataframe['headline_cna_mainly'], new_dataframe['headline_cna_secondpart']
+
+#Cleaning NaN values and reseting index for CNA
+
+
+lista_cna_headlines_first.dropna(inplace=True)
+lista_cna_headlines_second.dropna(inplace=True)
+lista_cna_headlines_first = lista_cna_headlines_first.reset_index(drop=True)
+lista_cna_headlines_second = lista_cna_headlines_second.reset_index(drop=True)
+
+#Removing \n\t\t\t characteres for lista_cna_headlines_second[:][0]:
+for i in range(len(lista_cna_headlines_second[:][0])):
+    lista_cna_headlines_second[i] = lista_cna_headlines_second[i][0]
+
+
+for elemento in range(len(lista_cna_headlines_second)):
+    lista_cna_headlines_second[elemento] = lista_cna_headlines_second[elemento][0].strip()
+
+#Reordening each element for lista_cna_headlines_first in order to remove '[]'
+
+for i in range(len(lista_cna_headlines_first)):
+    lista_cna_headlines_first[i] = lista_cna_headlines_first[i][0]
+
+#Concatening the first and second columns
+
+cna_headlines_final = [lista_cna_headlines_first, lista_cna_headlines_second]
+cna_headlines_final = pd.concat(cna_headlines_final, ignore_index=True)
+
+#Dropping [3] line in cna_headlines_final:
+cna_headlines_final.drop([3], inplace=True)
+
+#Reseting index in cna_headlines_final
+cna_headlines_final = cna_headlines_final.reset_index(drop=True)
+
+#Getting the first 5 rows on:
+
+cna_headlines_final = cna_headlines_final[:5]
+
+
 #Aprosoja
-headline_aprosja = new_dataframe['headline_aprosja']
+headline_aprosja, date_aprosja, links_aprosja = new_dataframe['headline_aprosja'], new_dataframe['aprosja_dates'], new_dataframe['links_aprosja']
+
 
 ## Removing NaN values
 headline_aprosja.dropna(inplace=True)
-
+date_aprosja.dropna(inplace=True)
+links_aprosja.dropna(inplace=True)
 #Reseting index for headline_aprosja
 headline_aprosja = headline_aprosja.reset_index(drop=True)
+date_aprosja = date_aprosja.reset_index(drop=True)
+links_aprosja = links_aprosja.reset_index(drop=True)
 
-#Dividing the headline_aprosja items in a list with commas
+
+#Dividing the headline_aprosja  items in a list with commas
 headline_aprosja = headline_aprosja[0].split("'")
+
+
 
 #Replacing \n elements and another elements on headline_aprosja:
 replace_this_elements = [r'\n ', r'\n', r'\t', 'Fortalecimento Institucional', "['                              '", "['                              '", "                          ']", '                       ', '                   ', '    ']
@@ -30,25 +79,55 @@ for i in range(len(headline_aprosja)):
     for character in replace_this_elements:
         headline_aprosja[i] = headline_aprosja[i].replace(character,'')
 
-# Changing '' for np.nan
+# Changing '' for np.nan in headline_aprosja
+character_to_change_nan = ["[", "   ",", ", '',']', 'Defesa Agrícola', 'Política Agrícola e Logística']
 for i in range(len(headline_aprosja)):
-    if headline_aprosja[i] == "[":
-        headline_aprosja[i] = np.nan
-    if headline_aprosja[i] == "   ":
-        headline_aprosja[i] = np.nan
-    if headline_aprosja[i] == ", ":
-        headline_aprosja[i] = np.nan
-    if headline_aprosja[i] == '':
-        headline_aprosja[i] = np.nan
-    if headline_aprosja[i] == "]":
-        headline_aprosja[i] = np.nan
-    if headline_aprosja[i] == 'Defesa Agrícola':
-        headline_aprosja[i] = np.nan
+    for character in character_to_change_nan:
+        if headline_aprosja[i] == character:
+            headline_aprosja[i] = np.nan
+
 
 #Creating a DataFrame to drop NaN values
 headline_aprosja_dataframe_drop = pd.DataFrame(headline_aprosja)
 headline_aprosja_dataframe_drop.dropna(inplace=True)
 headline_aprosja_dataframe_drop = headline_aprosja_dataframe_drop.reset_index(drop=True)
+
+new_dataframe['links_aprosja'].dropna(inplace=True)
+new_dataframe['links_aprosja'] = new_dataframe['links_aprosja'].reset_index(drop=True)
+
+#Spliting the aprosoja links in a list
+
+links_defined = links_aprosja[0].split(',')
+links_to_be_removed = [" 'https://www.aprosoja.com.br/comissao/fortalecimento-institucional'", " 'https://www.aprosoja.com.br/comissao/defesa-agricola'",  '" https://www.aprosoja.com.br/comissao/politica-agricola"']
+
+#Creating a looping in order to remove classified links
+for i in range(len(links_defined)):
+        if links_defined[i] == " 'https://www.aprosoja.com.br/comissao/fortalecimento-institucional'":
+            links_defined[i] = np.nan
+        if links_defined[i] == " 'https://www.aprosoja.com.br/comissao/defesa-agricola'":
+            links_defined[i] = np.nan
+        if links_defined[i] == '" https://www.aprosoja.com.br/comissao/politica-agricola"':
+            links_defined[i] = np.nan
+        if links_defined[i] == " 'https://www.aprosoja.com.br/comissao/sustentabilidade'":
+            links_defined[i] = np.nan
+
+
+#Creating a dictionary to iterate and get the link without repeat
+dictionary_links = {'links_label':links_defined}
+links_aprosja_without_nan = pd.DataFrame(dictionary_links)
+
+#Iterating over links_aprosja_without_nan to get links that aren't repeat
+
+counter_links = 0
+links_aprosja_final = []
+
+for i in range(len(links_aprosja_without_nan)):
+    links_aprosja_final.append(links_aprosja_without_nan.iloc[counter_links, 0])
+    counter_links = counter_links + 5
+    if counter_links == 40:
+        break
+
+links_aprosja_final = links_aprosja_final[:5]
 
 
 #Getting the headlines for aprosoja
@@ -59,7 +138,17 @@ for i in range(24):
     counter = counter + 3
     if counter == 16:
         break
-print(len(headline_aprosja_final))
+
+counter = 0
+dates_aprosja_final = []
+for i in range(22):
+    dates_aprosja_final.append(headline_aprosja_dataframe_drop.iloc[counter,0])
+    counter = counter + 3
+    if counter == 15:
+        break
+
+
+#Dropping Na for MMA links:
 lista_mma_links.dropna(inplace=True)
 lista_mma_headlines.dropna(inplace=True)
 lista_mma_dates.dropna(inplace=True)
@@ -301,4 +390,9 @@ ministerio_meio_ambiente_dataframe = pd.DataFrame(mma_dictionary)
 
 fiemg_dictionary = {'HEADLINES fiemg':headlines_fiemg, 'DATES fiemg':dates_fiemg, 'Links fiemg': links_fiemg}
 fiemg_dataframe = pd.DataFrame(fiemg_dictionary)
+
+#Creating a dictionary and dataframe to APROSOJA
+
+aprosoja_dictionary = {'HEADLINES APROSOJA':headline_aprosja_final, 'DATES APROSOJA':dates_aprosja_final, 'LINKS APROSOJA':links_aprosja_final}
+aprosoja_dataframe = pd.DataFrame(aprosoja_dictionary)
 
