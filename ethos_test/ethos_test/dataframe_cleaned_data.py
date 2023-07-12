@@ -179,11 +179,11 @@ cna_dates.dropna(inplace=True)
 cna_dates = cna_dates.reset_index(drop=True)
 
 #Removing \n\t\t\t characteres for lista_cna_headlines_second[:][0]:
-for i in range(len(lista_cna_headlines_second[:][0])):
-    lista_cna_headlines_second[i] = lista_cna_headlines_second[i][0]
 
+for i in range(len(lista_cna_headlines_second)):
+    lista_cna_headlines_second[i] = lista_cna_headlines_second[i][0]
 for elemento in range(len(lista_cna_headlines_second)):
-    lista_cna_headlines_second[elemento] = lista_cna_headlines_second[elemento][0].strip()
+    lista_cna_headlines_second[elemento] = lista_cna_headlines_second[elemento].strip()
 
 #Reordening each element for lista_cna_headlines_first in order to remove '[]'
 
@@ -203,26 +203,21 @@ cna_headlines_final = pd.concat(cna_headlines_final, ignore_index=True)
 links_cna_final = [cna_first_links, cna_second_links]
 links_cna_final = pd.concat(links_cna_final, ignore_index=True)
 
-
 #Dropping [3] line in cna_headlines_final:
-
-cna_headlines_final.drop([3], inplace=True)
-
-#Reseting index in cna_headlines_final
-
-cna_headlines_final = cna_headlines_final.reset_index(drop=True)
+#cna_headlines_final.drop([3], inplace=True)
+#cna_headlines_final = cna_headlines_final.reset_index(drop=True)
 
 #Getting the first 5 rows on:
 cna_headlines_final = cna_headlines_final[:5]
 links_cna_final = links_cna_final[:5]
 cna_dates = cna_dates[:5]
 
+print(cna_headlines_final)
 #Removing titles with \n\t\t\t
-
 for i in range(len(cna_headlines_final)):
     cna_headlines_final[i] = cna_headlines_final[i].strip()
 
-
+print(cna_headlines_final)
 #Governo de São Paulo website
 sp_government_headline = new_dataframe['headline_governo_sampa']
 
@@ -233,12 +228,9 @@ sp_government_headline = sp_government_headline.reset_index(drop=True)
 #Creating a list for SP Government from a split
 list_government_sp = sp_government_headline[0].split("'")
 
-
-
 #Stripping the list to remove breaklines
 for i in range(len(list_government_sp)):
     list_government_sp[i] = list_government_sp[i].strip(r'        \n                          \n       ')
-
 
 #Removing dates characters
 for i in range(len(list_government_sp)):
@@ -247,6 +239,8 @@ for i in range(len(list_government_sp)):
     if len(list_government_sp) == 17:
         list_government_sp[i] = np.nan
 
+#From 24 item:
+list_government_sp = list_government_sp[23:]
 
 #Removing another characters on list_government_sp:
 list_of_characters_toremove = ['400', '1', '2', '[', '»', ',', ']', '…']
@@ -674,7 +668,7 @@ for i in range(len(fiemg_links_list)):
 
 #Creating a link format to each list object
 for i in range(len(links_fiemg)):
-    links_fiemg[i] = links_fiemg[i].replace("['/noticias/detalhe/", "/noticias/detalhe/")
+    links_fiemg[i] = links_fiemg[i].replace("['/Noticias/Detalhe/", "/Noticias/Detalhe/")
 
 #Replacing linespaces in headlines_fiemg
 for i in range(len(headlines_fiemg)):
@@ -775,4 +769,3 @@ socioambiental_dataframe = pd.DataFrame(socioambiental_dictionary)
 #Creating a dictionary and DataFrame to Desenvolvimento SP
 desenvolvimento_dictionary = {'HEADLINES DESENVOLVIMENTO SP':headline_desenvolvimento_sampa_list, 'LINK':links_desenvolvimento_sampa, 'DATA DA NOTÍCIA':headline_data_sampa_list}
 desenvolvimento_dataframe = pd.DataFrame(desenvolvimento_dictionary)
-

@@ -1,5 +1,7 @@
-from dataframe_cleaned_data import *
+from dataframe_cleaned_data import * #IMPORT THE ANOTHER CODE WITH DATA FROM EACH ASSOCIATION
 
+
+#MENU FOR EACH ASSOCIATIONS
 print(10*'=' +  ' Selecione a associação ou fonte de notícia desejada ' + 10*'=')
 print('1 - IBRAM')
 print('2 - AMCHAM')
@@ -12,8 +14,10 @@ print('8 - Instituto Socioambiental')
 print('9 - Ministério do Meio Ambiente')
 print('10 - Governo de São Paulo')
 
+#THE OPTIONS SELECTED FOR ASSOCIATION
 fonte = input('Opção Selecionada: ')
 
+#FUNCTION FOR IBRAM
 def ibram_function():
     lista_ibram_nova = []
     for i in range(len(ibram_dataframe_final)):
@@ -22,6 +26,7 @@ def ibram_function():
         #Concatening headline with link and changing the lista_ibram_nova:
     return print(lista_ibram_nova)
 
+#FUNCTION FOR AMCHAM
 def amcham_function():
     lista_amcham_nova = []
     counter = 0
@@ -30,6 +35,7 @@ def amcham_function():
         lista_amcham_nova.append(amcham_dataframe.iloc[i,2])
     return print(lista_amcham_nova)
 
+#FUNCTION FOR CNA
 def cna_function():
     lista_cna_nova = []
     counter = 0
@@ -38,6 +44,7 @@ def cna_function():
         lista_cna_nova.append(cna_dataframe.iloc[i,2])
     return print(lista_cna_nova)
 
+#FUNCTION FOR APROSOJA
 def aprosoja_function():
     lista_aprosoja_nova = []
     for i in range(len(aprosoja_dataframe)):
@@ -46,6 +53,7 @@ def aprosoja_function():
         #Concatening headline with link and changing the lista_ibram_nova:
     return print(lista_aprosoja_nova)
 
+#FUNCTION FOR DEVELOPMENT SP
 def desenvolvimento_function():
     lista_desenvolvimento_nova = []
     counter = 0
@@ -54,6 +62,7 @@ def desenvolvimento_function():
         lista_desenvolvimento_nova.append(desenvolvimento_dataframe.iloc[i,1])
     return print(lista_desenvolvimento_nova)
 
+#FUNCTION FOR ALESP
 def alesp_function():
     lista_alesp_nova = []
     counter = 0
@@ -62,6 +71,7 @@ def alesp_function():
         lista_alesp_nova.append(alesp_final_dataframe.iloc[i,1])
     return print(lista_alesp_nova)
 
+#Function for FIEMG
 def fiemg_function():
     lista_fiemg_nova = []
     counter = 0
@@ -70,6 +80,7 @@ def fiemg_function():
         lista_fiemg_nova.append(fiemg_dataframe.iloc[i,2])
     return print(lista_fiemg_nova)
 
+#Function for Enviromental Ministery
 def meioambiente_function():
     lista_ambiente_nova = []
     counter = 0
@@ -77,6 +88,8 @@ def meioambiente_function():
         lista_ambiente_nova.append(ministerio_meio_ambiente_dataframe.iloc[i,0])
         lista_ambiente_nova.append(ministerio_meio_ambiente_dataframe.iloc[i,1])
     return print(lista_ambiente_nova)
+
+#Function for SP Government
 def governo_sampa_function():
     lista_governo_sampa_nova = []
     counter = 0
@@ -85,6 +98,9 @@ def governo_sampa_function():
         lista_governo_sampa_nova.append(government_sampa_dataframe.iloc[i,1])
     return print(lista_governo_sampa_nova)
 
+#IF ELSE CONDITIONS FOR EACH VALUE THAT CAN BE WRITED IN THE "FONTE" VARIABLE
+if fonte == '1':
+    ibram_function()
 if fonte == '4':
     aprosoja_function()
 if fonte == '2':
