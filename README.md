@@ -1,1 +1,1 @@
-# mosaic_headlines_project
+# Headlines project readme
