@@ -5,7 +5,7 @@ class KeywordsSpider(scrapy.Spider):
     headers = {
         'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36'
     }
-    start_urls = ['https://www.ethos.org.br/categoria/noticias/', 'https://www.pactoglobal.org.br/noticias', 'https://ibram.org.br/noticias/', 'https://www.gov.br/mma/pt-br/assuntos/noticias', 'https://www7.fiemg.com.br/Noticias', 'https://www.amcham.com.br/noticias','https://www.aberje.com.br/category/noticias/', 'https://abag.com.br/noticias-abag/', 'https://www.cnabrasil.org.br/cna/noticias', 'https://www.socioambiental.org', 'http://www.aprosoja.com.br/comunicacao/noticias-e-releases/','https://www.saopaulo.sp.gov.br/ultimas-noticias/', 'https://www.desenvolvimentoeconomico.sp.gov.br/category/noticias/', 'https://www.al.sp.gov.br/noticias']
+    start_urls = ['https://www.ethos.org.br/categoria/noticias/', 'https://www.pactoglobal.org.br/noticias', 'https://ibram.org.br/noticias/', 'https://www.gov.br/mma/pt-br/assuntos/noticias', 'https://www.amcham.com.br/noticias','https://www.aberje.com.br/category/noticias/', 'https://abag.com.br/noticias-abag/', 'https://www.cnabrasil.org.br/cna/noticias', 'http://www.aprosoja.com.br/comunicacao/noticias-e-releases/','https://www.saopaulo.sp.gov.br/ultimas-noticias/', 'https://www.desenvolvimentoeconomico.sp.gov.br/category/noticias/', 'https://www.al.sp.gov.br/noticias', 'https://www.gov.br/agricultura/pt-br/assuntos/noticias']
 
     def parse(self, response):
         if 'https://ibram.org.br/noticias/' in response.url:
@@ -15,11 +15,6 @@ class KeywordsSpider(scrapy.Spider):
                 'IBRAM_LINKS': ibram.css('.title.mtr-site ::attr(href)').extract(),
                 'IBRAM_DATA_HEADLINE': response.css('.date ::text').extract()
             }
-        for fiemg in response.css('.media.media--vertical'):
-            yield {
-                'FIEMG_NEWS_HEADLINE': str(fiemg.css('.media.media--vertical ::text').extract()),
-                'FIEMG_NEWS_HEADLINE_LINK':str(fiemg.css('.media.media--vertical ::attr(href)').extract()),
-             }
         for meio_ambiente in response.css('h2.tileHeadline'):
             yield {
                 'ministerio_meio_ambiente_news': meio_ambiente.css('h2.tileHeadline ::text').extract(),
@@ -52,9 +47,14 @@ class KeywordsSpider(scrapy.Spider):
              yield {
                 'CNA_DATA': str(cna_data.css('.card__data ::text').extract())
             }
-        for socio_ambiental_headlines in  response.css('.card-title'):
+        for ministerio_agricultura_pecuaria in response.css('.titulo'):
             yield {
-                'headline_socioambiental': str(socio_ambiental_headlines.css('.card-title ::text').extract())
+                'headline_mapa': ministerio_agricultura_pecuaria.css('.titulo ::text').extract(),
+                'links_mapa': ministerio_agricultura_pecuaria.css('.titulo ::attr(href)').extract()
+            }
+        for ministerio_agricultura_pecuaria_date in response.css('.date'):
+            yield {
+                'date_mapa': ministerio_agricultura_pecuaria_date.css('.date ::text').extract()
             }
         for socio_ambiental_links in response.css('.change-border-color.card-home-news'):
             yield {

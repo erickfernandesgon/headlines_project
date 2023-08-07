@@ -96,7 +96,6 @@ alesp_dataframe_headlines = alesp_dataframe_headlines.reset_index(drop=True)
 
 #Getting the first 11 elements on alesp_headlines
 alesp_dataframe_headlines = alesp_dataframe_headlines[:11]
-
 #Creating a list using alesp_dataframe_headlines
 alesp_headlines_list = []
 for i in range(len(alesp_dataframe_headlines)):
@@ -121,39 +120,80 @@ alesp_final_dataframe = pd.DataFrame(alesp_dictionary)
 
 #Instituto Sócio Ambiental
 
-#Creating a list with socioambiental headlines and Dates
-lista_socioambiental_headlines = new_dataframe['headline_socioambiental']
-lista_socioambiental_links = new_dataframe['link_socioambiental']
-lista_socioambiental_dates = new_dataframe['date_socioambiental']
+#Creating a list with mapa headlines and Dates
+lista_mapa_headlines = new_dataframe['headline_mapa']
+lista_mapa_links = new_dataframe['links_mapa']
+lista_mapa_dates = new_dataframe['date_mapa']
 
-#Cleaning NaN values and resetting index for lista_socioambiental
-lista_socioambiental_headlines.dropna(inplace=True)
-lista_socioambiental_links.dropna(inplace=True)
-lista_socioambiental_dates.dropna(inplace=True)
+#Cleaning NaN values for lista_mapa_headlines, lista_mapa_dates and lista_mapa_links:
+lista_mapa_headlines.dropna(inplace=True)
+lista_mapa_links.dropna(inplace=True)
+lista_mapa_dates.dropna(inplace=True)
 
-lista_socioambiental_dates = lista_socioambiental_dates.reset_index(drop=True)
-lista_socioambiental_links = lista_socioambiental_links.reset_index(drop=True)
-lista_socioambiental_headlines = lista_socioambiental_headlines.reset_index(drop=True)
-socioambiental_link = ['https://www.socioambiental.org/']
-links_socioambiental = []
+#Reset index forlista_mapa_headlines, lista_mapa_dates and lista_mapa_links:
+lista_mapa_headlines = lista_mapa_headlines.reset_index(drop=True)
+lista_mapa_links = lista_mapa_links.reset_index(drop=True)
+lista_mapa_dates = lista_mapa_dates.reset_index(drop=True)
 
-#Iterate through lista_socioambiental_links concatenating socioambientalwebsite and lista_socioambiental_links
-for i in range(len(lista_socioambiental_links)):
-    links_socioambiental.append(socioambiental_link[0] + str(lista_socioambiental_links[i]))
+#Getting the dates for each headline from list_mapa_dates and reset index:
+lista_mapa_dates = lista_mapa_dates[23:32]
+lista_mapa_dates = lista_mapa_dates.reset_index(drop=True)
 
-#Creating a link format to each list object
-for i in range(len(links_socioambiental)):
-    links_socioambiental[i] = links_socioambiental[i].replace("['/noticias-socioambientais/", "/noticias-socioambientais/")
+#Getting dates without []
+for i in range(len(lista_mapa_dates)):
+    lista_mapa_dates[i] = lista_mapa_dates[i][0]
 
+#Turning lista_mapa_dates out object to a list
+lista_mapa_dates = list(lista_mapa_dates)
+
+#Getting date format to a format without a time selecting [i] from len and first 10 letters from character
+for i in range(len(lista_mapa_dates)):
+    lista_mapa_dates[i] = lista_mapa_dates[i][:10]
+
+#Getting the first five dates from lista_mapa_dates
+lista_mapa_dates = lista_mapa_dates[:5]
+
+#Getting the links in the lista_mapa_links without any character that don't have link and reseting:
+lista_mapa_links = lista_mapa_links[3:22] #Getting the links without empty lists
+lista_mapa_links = lista_mapa_links.reset_index(drop=True) #Resetting index
+lista_mapa_links = lista_mapa_links[4:18] #Getting the links without empty lists again
+lista_mapa_links = lista_mapa_links.reset_index(drop=True) #Resetting the index
+
+#Getting the first five links from lista_mapa_links:
+lista_mapa_links = lista_mapa_links[:5]
+
+#Getting the links without '[]':
+for i in range(len(lista_mapa_links)):
+    lista_mapa_links[i] = lista_mapa_links[i][0]
+
+#Turning the object lista_mapa_links into a list:
+lista_mapa_links = list(lista_mapa_links)
+
+#Turning this object in a list
+#Getting the items in lista_mapa_headlines from the third  and reset it:
+lista_mapa_headlines = lista_mapa_headlines[4:] #Getting the data from third element
+lista_mapa_headlines = lista_mapa_headlines.reset_index(drop=True) #Resetting index
+lista_mapa_headlines = lista_mapa_headlines[3:21] #Getting the data from the third element again
+lista_mapa_headlines = lista_mapa_headlines.reset_index(drop=True) #Resetting index
+
+#Getting the first five elements for lista_mapa_headlines
+lista_mapa_headlines = lista_mapa_headlines[:5]
+
+#Getting the headlines from lista_mapa_headlines without breaklines:
+for i in range(len(lista_mapa_headlines[:20])):
+    lista_mapa_headlines[i] = lista_mapa_headlines[i][1]
+
+#Getting the first five headlines for lista_mapa_
+lista_mapa_headlines = lista_mapa_headlines[:5]
+
+#Creating a list to get all elements from lista_mapa_headlines:
+lista_mapa_headlines_list = list(lista_mapa_headlines)
 
 #Ministério do Meio Ambiente
-
 #Creating a list with MMA headlines and Dates
-
 lista_mma_headlines, lista_mma_dates, lista_mma_links = new_dataframe['ministerio_meio_ambiente_news'], new_dataframe['ministerio_meio_ambiente_data'], new_dataframe['ministerio_meio_ambiente_link']
 
 #CNA
-
 #Creating new lists for these dataframes
 lista_cna_headlines_first, lista_cna_headlines_second = new_dataframe['headline_cna_mainly'], new_dataframe['headline_cna_secondpart']
 
@@ -179,14 +219,12 @@ cna_dates.dropna(inplace=True)
 cna_dates = cna_dates.reset_index(drop=True)
 
 #Removing \n\t\t\t characteres for lista_cna_headlines_second[:][0]:
-
 for i in range(len(lista_cna_headlines_second)):
     lista_cna_headlines_second[i] = lista_cna_headlines_second[i][0]
 for elemento in range(len(lista_cna_headlines_second)):
     lista_cna_headlines_second[elemento] = lista_cna_headlines_second[elemento].strip()
 
 #Reordening each element for lista_cna_headlines_first in order to remove '[]'
-
 for i in range(len(lista_cna_headlines_first)):
     lista_cna_headlines_first[i] = lista_cna_headlines_first[i][0]
 
@@ -212,12 +250,12 @@ cna_headlines_final = cna_headlines_final[:5]
 links_cna_final = links_cna_final[:5]
 cna_dates = cna_dates[:5]
 
-print(cna_headlines_final)
+
 #Removing titles with \n\t\t\t
 for i in range(len(cna_headlines_final)):
     cna_headlines_final[i] = cna_headlines_final[i].strip()
 
-print(cna_headlines_final)
+
 #Governo de São Paulo website
 sp_government_headline = new_dataframe['headline_governo_sampa']
 
@@ -236,7 +274,7 @@ for i in range(len(list_government_sp)):
 for i in range(len(list_government_sp)):
     if len(list_government_sp[i]) == 18:
         list_government_sp[i] = np.nan
-    if len(list_government_sp) == 17:
+    elif len(list_government_sp[i]) == 17:
         list_government_sp[i] = np.nan
 
 #From 24 item:
@@ -283,14 +321,13 @@ government_links_dataframe = government_links_dataframe.reset_index(drop=True)
 #Splitting government_links_dataframe:
 government_links_dataframe = government_links_dataframe[0].split("'")
 
-
 #Creating a list with odd values for links_government_sp_counter:
 government_sampa_counter_links = 1
 
 for i in range(len(government_links_dataframe)):
     government_links_dataframe[i] = government_links_dataframe[government_sampa_counter_links]
     government_sampa_counter_links = government_sampa_counter_links + 2
-    if government_sampa_counter_links == 47:
+    if government_sampa_counter_links == 41:
         break
 
 #Getting pair links for governement_links_dataframe:
@@ -449,7 +486,7 @@ for i in range(len(headline_aprosja)):
         headline_aprosja[i] = headline_aprosja[i].replace(character,'')
 
 # Changing '' for np.nan in headline_aprosja
-character_to_change_nan = ["[", "   ",", ", '',']', 'Defesa Agrícola', 'Política Agrícola e Logística', 'Sustentabilidade']
+character_to_change_nan = ["[", "   ",", ", '',']', 'Defesa Agrícola', 'Política Agrícola e Logística', 'Sustentabilidade', 'Fortalecimento Institucional']
 for i in range(len(headline_aprosja)):
     for character in character_to_change_nan:
         if headline_aprosja[i] == character:
@@ -620,67 +657,65 @@ for i in range(5):
     amcham_list_oficial.append(amcham_lists_headlines[i][49])
     amcham_datas.append(amcham_lists_headlines[i][14])
 
-#fiemg
-
-## Creating a list through fiemg Dataframe
+##fiemg
+## Creating a list through #fiemg Dataframe
 ### Headline
-fiemg_headline_list = new_dataframe['FIEMG_NEWS_HEADLINE']
-fiemg_links_list = new_dataframe['FIEMG_NEWS_HEADLINE_LINK']
+#fiemg_headline_list = new_dataframe['#fiemg_NEWS_HEADLINE']
+#fiemg_links_list = new_dataframe['#fiemg_NEWS_HEADLINE_LINK']
 
+
+#print(#fiemg_links_list)
 #### Dropping the nan values and resetting index
-fiemg_headline_list.dropna(inplace=True)
-fiemg_headline_list = fiemg_headline_list.reset_index(drop=True)
-fiemg_links_list.dropna(inplace=True)
-fiemg_links_list = fiemg_links_list.reset_index(drop=True)
+#fiemg_headline_list.dropna(inplace=True)
+#fiemg_headline_list = #fiemg_headline_list.reset_index(drop=True)
+#fiemg_links_list.dropna(inplace=True)
+#fiemg_links_list = #fiemg_links_list.reset_index(drop=True)
 
-fiemg_lists_headlines = []
-####Creating a list to split fiemg:
-
-for i in range(7):
-    fiemg_lists_headlines.append(fiemg_headline_list[i])
-
-for i in range(7):
-    fiemg_lists_headlines[i] = fiemg_lists_headlines[i].split(r'\n')
-
+#fiemg_lists_headlines = []
+####Creating a list to split #fiemg:
+#for i in range(7):
+    #fiemg_lists_headlines.append(#fiemg_headline_list[i])
+#for i in range(7):
+    #fiemg_lists_headlines[i] = #fiemg_lists_headlines[i].split(r'\n')
 
 ##### Creating a list to get headlines only:
-headlines_fiemg = []
-for i in range(len(fiemg_lists_headlines)):
-    headlines_fiemg.append(fiemg_lists_headlines[i][8])
+#headlines_#fiemg = []
+#for i in range(len(#fiemg_lists_headlines)):
+    #headlines_#fiemg.append(#fiemg_lists_headlines[i][8])
 
 #### Creating a list to get dates only:
-dates_fiemg = []
-for i in range(len(fiemg_lists_headlines)):
-    dates_fiemg.append(fiemg_lists_headlines[i][2])
+#dates_#fiemg = []
+#for i in range(len(#fiemg_lists_headlines)):
+    #dates_#fiemg.append(#fiemg_lists_headlines[i][2])
 
-#Creating a list with fiemg source:
-fiemglink = ['https://www7.fiemg.com.br']
-links_fiemg = []
+#Creating a list with #fiemg source:
+#fiemglink = ['https://www7.#fiemg.com.br']
+#links_#fiemg = []
 
 #Getting the first 5 headlines
-headlines_fiemg = headlines_fiemg[0:5]
-fiemg_links_list = fiemg_links_list[0:5]
-dates_fiemg = dates_fiemg[0:5]
+#headlines_#fiemg = headlines_#fiemg[0:5]
+#fiemg_links_list = #fiemg_links_list[0:5]
+#dates_#fiemg = dates_#fiemg[0:5]
 
-#Iterate through fiemg_links_list concatenating fiemglink and fieg_links_list
-for i in range(len(fiemg_links_list)):
-    links_fiemg.append(fiemglink[0] + str(fiemg_links_list[i]))
+#Iterate through #fiemg_links_list concatenating #fiemglink and fieg_links_list
+#for i in range(len(#fiemg_links_list)):
+   # links_#fiemg.append(#fiemglink[0] + str(#fiemg_links_list[i]))
 
 #Creating a link format to each list object
-for i in range(len(links_fiemg)):
-    links_fiemg[i] = links_fiemg[i].replace("['/Noticias/Detalhe/", "/Noticias/Detalhe/")
+#for i in range(len(links_#fiemg)):
+   # links_#fiemg[i] = links_#fiemg[i].replace("['/Noticias/Detalhe/", "/Noticias/Detalhe/")
 
-#Replacing linespaces in headlines_fiemg
-for i in range(len(headlines_fiemg)):
-    headlines_fiemg[i] = headlines_fiemg[i].replace(r', ', "")
-    headlines_fiemg[i] = headlines_fiemg[i].replace(r'    ''', '')
-    headlines_fiemg[i] = headlines_fiemg[i].replace(str(headlines_fiemg[i][0]), '')
+#Replacing linespaces in headlines_#fiemg
+#for i in range(len(headlines_#fiemg)):
+   # headlines_#fiemg[i] = headlines_#fiemg[i].replace(r', ', "")
+   # headlines_#fiemg[i] = headlines_#fiemg[i].replace(r'    ''', '')
+   # headlines_#fiemg[i] = headlines_#fiemg[i].replace(str(headlines_#fiemg[i][0]), '')
 
 #Replacing linespaces in dates and another characteres
-for i in range(len(dates_fiemg)):
-    dates_fiemg[i] = dates_fiemg[i].replace(r', ',"")
-    dates_fiemg[i] = dates_fiemg[i].replace(r'                            ', "")
-    dates_fiemg[i] = dates_fiemg[i].replace(dates_fiemg[i][0], "")
+#for i in range(len(dates_#fiemg)):
+   # dates_#fiemg[i] = dates_#fiemg[i].replace(r', ',"")
+  # dates_#fiemg[i] = dates_#fiemg[i].replace(r'                            ', "")
+   # dates_#fiemg[i] = dates_#fiemg[i].replace(dates_#fiemg[i][0], "")
 
 #Creating a list with links, headlines and dates
 lista_ibram = new_dataframe['IBRAM_HEADLINES']
@@ -697,6 +732,7 @@ new_dataframe['IBRAM_DATA_HEADLINE'].dropna(inplace=True)
 lista_ibram = lista_ibram.reset_index(drop=True)
 lista_ibram_links = lista_ibram_links.reset_index(drop=True)
 lista_ibram_datas = lista_ibram_datas.reset_index(drop=True)
+
 
 #Creating a list to put headlines on
 ibram_lists_headlines = []
@@ -750,9 +786,9 @@ ibram_dataframe_final = ibram_dataframe_final.iloc[:5,:]
 mma_dictionary = {'HEADLINES MMA':mma_lists_headlines, 'MMA LINKS': lista_mma_links, 'MMA DATAS':dates_ministerio_meio_ambiente}
 ministerio_meio_ambiente_dataframe = pd.DataFrame(mma_dictionary)
 
-# Creating a pandas Dataframe through a dictionary for fiemg:
-fiemg_dictionary = {'HEADLINES fiemg':headlines_fiemg, 'DATES fiemg':dates_fiemg, 'Links fiemg': links_fiemg}
-fiemg_dataframe = pd.DataFrame(fiemg_dictionary)
+# Creating a pandas Dataframe through a dictionary for #fiemg:
+#fiemg_dictionary = {'HEADLINES #fiemg':headlines_#fiemg, 'DATES #fiemg':dates_#fiemg, 'Links #fiemg': links_#fiemg}
+#fiemg_dataframe = pd.DataFrame(#fiemg_dictionary)
 
 #Creating a dictionary and dataframe to APROSOJA
 aprosoja_dictionary = {'HEADLINES APROSOJA':headline_aprosja_final, 'DATES APROSOJA':dates_aprosja_final, 'LINKS APROSOJA':links_aprosja_final}
@@ -762,9 +798,9 @@ aprosoja_dataframe = pd.DataFrame(aprosoja_dictionary)
 cna_dictionary = {'CNA_HEADLINES':cna_headlines_final, 'DATES_CNA':cna_dates, 'LINKS CNA':links_cna_final}
 cna_dataframe = pd.DataFrame(cna_dictionary)
 
-#Creating a dictionary and DataFrame to socioambiental
-socioambiental_dictionary = {'SOCIOAMBIENTAL_HEADLINES':lista_socioambiental_headlines, 'DATES_SOCIOAMBIENTAL':lista_socioambiental_dates, 'SOCIO_AMBIENTAL_LINKS':links_socioambiental}
-socioambiental_dataframe = pd.DataFrame(socioambiental_dictionary)
+#Creating a dictionary and DataFrame to Ministerio da Agricultura e Pecuaria
+mapa_dictionary = {'MAPA_HEADLINES':lista_mapa_headlines, 'MAPA_LINKS':lista_mapa_links, 'DATES_MAPA':lista_mapa_dates}
+mapa_dataframe = pd.DataFrame(mapa_dictionary)
 
 #Creating a dictionary and DataFrame to Desenvolvimento SP
 desenvolvimento_dictionary = {'HEADLINES DESENVOLVIMENTO SP':headline_desenvolvimento_sampa_list, 'LINK':links_desenvolvimento_sampa, 'DATA DA NOTÍCIA':headline_data_sampa_list}
