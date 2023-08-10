@@ -51,7 +51,7 @@ Agora, vamos até o site da Github onde está salvo o projeto com o código em: 
 
 No site, clique em "código". Você irá notar um link, esse é o link do projeto e você precisa copiar esse link. Você pode fazer isso no modo padrão, selecionando e copiando, ou clicando nos dois retângulos ao lado do link. 
 
-![screenshot]([[https://raw.githubusercontent.com/amitmerchant1990/electron-markdownify/master/app/img/markdownify.gif](https://user-images.githubusercontent.com/52026261/259853799-d01f0bd8-3ff0-4b7e-800b-2440cc3aedb8.png](https://github.com/erickfernandesgon/headlines_project/issues/2#issue-1845772187)))
+![screenshot](https://raw.githubusercontent.com/amitmerchant1990/electron-markdownify/master/app/img/markdownify.gif)
 
 Após esse procedimento, vamos voltar ao Pycharm e vamos clicar em 1) "File", 2) "Settings", 3) "Version Control", 4) "Github" e clique no sinal de "+" e clique em Login via Github. Após esse procedimento, clique em Login via Github e faça o login. Você será direcionado para uma página da Github para logar no Github*, e então é só logar. 
 
