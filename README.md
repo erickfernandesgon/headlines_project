@@ -15,8 +15,6 @@
   <a href="#license">License</a>
 </p>
 
-![screenshot](https://raw.githubusercontent.com/amitmerchant1990/electron-markdownify/master/app/img/markdownify.gif)
-
 ## Key Features
 
 * LivePreview - Make changes, See changes
@@ -37,9 +35,29 @@
 * Cross platform
   - Windows, macOS and Linux ready.
 
-## How To Use
+## Preparando o Ambiente
 
-To clone and run this application, you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
+Para trazer o código pra o seu computador, você precisará ter instalado o [Anaconda](https://www.anaconda.com/download]), [Pycharm](https://www.jetbrains.com/pycharm/download/download-thanks.html?var=3&platform=windows&code=PCC), [Git](https://github.com/git-for-windows/git/releases/download/v2.41.0.windows.3/Git-2.41.0.3-64-bit.exe) e o [Pacote Pandas], [Pacote Scrapy]. Em reação à esses dois últimos, o Pandas e o Scrapy, não se precupe com eles neste momento, mas o Anaconda e o Pycharm são totalmente necessários para executar o código. 
+
+Após instalar o Anaconda, Git e o Pycharm, vamos clonar o repositório e trazê-lo para seu computador. Clonar a grosso modo nada mais é do que copiar o projeto do código para o seu computador. O processo será feito através do Pycharm
+
+Abra o Pycharm e clique em File --> Settings --> Plugins, iremos instalar também o Github (Rede social que você guarda diferentes versões de códigos). 
+
+Feito o procedimento, clique em ok. 
+
+## Clonando/Trazendo uma cópia do projeto para o seu computador, de forma que esse possa ser usado:
+
+Agora, vamos até o site da Github onde está salvo o projeto com o código em: (https://github.com/erickfernandesgon/headlines_project)
+
+No site, clique em "código". Você irá notar um link, esse é o link do projeto e você precisa copiar esse link. Você pode fazer isso no modo padrão, selecionando e copiando, ou clicando nos dois retângulos ao lado do link. 
+
+![screenshot]([https://raw.githubusercontent.com/amitmerchant1990/electron-markdownify/master/app/img/markdownify.gif](https://user-images.githubusercontent.com/52026261/259853799-d01f0bd8-3ff0-4b7e-800b-2440cc3aedb8.png))
+
+Após esse procedimento, vamos voltar ao Pycharm e vamos clicar em 1) "File", 2) "Settings", 3) "Version Control", 4) "Github" e clique no sinal de "+" e clique em Login via Github. Após esse procedimento, clique em Login via Github e faça o login. Você será direcionado para uma página da Github para logar no Github*, e então é só logar. 
+
+*Você pode fazer a conta na Github clicando em "https://github.com/", "Sign in". Leva um minuto no máximo a criação da conta. 
+
+Após logar, clique em "ok", e em seu Pycharm clique em "Vcs" em seguida "Get from version control", depois selecione Github, em seguida "Repository URL", e cole o link do código no campo URL: "https://github.com/erickfernandesgon/headlines_project.git". Repare que há um campo com o caminho das pastas que você vai salvar o seu projeto, é importante que você guarde o nome desse caminho de pasta porque você vai precisar dele no futuro. 
 
 ```bash
 # Clone this repository
