@@ -59,6 +59,31 @@ Após esse procedimento, vamos voltar ao Pycharm e vamos clicar em 1) "File", 2)
 
 Após logar, clique em "ok", e em seu Pycharm clique em "Vcs" em seguida "Get from version control", depois selecione Github, em seguida "Repository URL", e cole o link do código no campo URL: "https://github.com/erickfernandesgon/headlines_project.git". Repare que há um campo com o caminho das pastas que você vai salvar o seu projeto, é importante que você guarde o nome desse caminho de pasta porque você vai precisar dele no futuro. 
 
+![screenshot](https://user-images.githubusercontent.com/52026261/259859645-4c4beac9-735a-4b56-b1a7-551f34f0c2e2.png)
+
+Clique em "Ok" e em "New Window".
+
+## Preparando o ambiente virtual com os pacotes necessários. 
+Antes de trabalharmos com o código de fato, vamos criar um ambiente virtual no Anaconda. Ao lado do Menu Iniciar, digite na barra de pesquisa "Anaconda Prompt". Em seguida, digite o que está entre aspas "conda create --name projeto_headline"
+
+Dê enter, aperte y caso a aplicação te pergunte se deseja prosseguir. Em seguida digite "conda activate projeto_headline". 
+Feito isso, vamos instalar alguns pacotes que serão usados para abrir o código dentro do Pycharm. 
+
+Digite no terminal:
+
+conda install pip 
+Faça o mesmo procedimento confirmando e apertando "y" para confirmar.
+
+Em seguida, digite "conda install scrapy" e faça o mesmo processo.
+
+Depois disso digite "conda install pandas", e também faça o mesmo processo.
+
+Agora você pode fechar o terminal e retornar ao projeto. 
+
+## Trabalhando com o código
+
+Vá no Pycharm e clique em 
+
 ```bash
 # Clone this repository
 $ git clone https://github.com/amitmerchant1990/electron-markdownify
